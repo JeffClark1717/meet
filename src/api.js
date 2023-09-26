@@ -1,4 +1,5 @@
-import mockData from './mock-data';
+import mockData from "./mock-data";
+
 
 /**
  *
