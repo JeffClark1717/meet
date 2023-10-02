@@ -1,7 +1,7 @@
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import { render, within, waitFor } from '@testing-library/react';
 import App from '../App';
-import { getEvents } from '../mock-data';
+import { getEvents } from '../api';
 import userEvent from '@testing-library/user-event';
 
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
@@ -29,7 +29,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test.skip('User should see a list of suggestions when they search for a city.',({given, then, when}) => {
+    test('User should see a list of suggestions when they search for a city.',({given, then, when}) => {
         let AppComponent;
         given('the main page is open', () => {
             AppComponent = render(<App />);
@@ -43,7 +43,7 @@ defineFeature(feature, test => {
             await user.type(citySearchInput, "Berlin");
         });
 
-        then('the user should receive a list of cities (suggestions) that match what >they’ve typed', async () => {
+        then('the user should recieve a list of cities (suggestions) that match what they’ve typed', async () => {
      await waitFor(() => {
        const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem'); 
        expect(suggestionListItems).toHaveLength(2);
