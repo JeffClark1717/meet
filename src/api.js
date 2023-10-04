@@ -1,6 +1,5 @@
 import mockData from "./mock-data";
 
-
 /**
  *
  * @param {*} events:
@@ -20,7 +19,6 @@ export const extractLocations = (events) => {
  * This function will fetch the list of all events
  */
 export const getEvents = async () => {
-
   if (window.location.href.startsWith("http://localhost")) {
     return mockData;
   }
@@ -29,18 +27,18 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = "YOUR_GET_EVENTS_API_ENDPOINT" + "/" + token;
+    const url = `YOUR_GET_EVENTS_API_ENDPOINT/${token}`;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
       return result.events;
-    } else return null;
+    }
+    return null;
   }
 };
 
-
 export const getAccessToken = async () => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem("access_token");
   const tokenCheck = accessToken && (await checkToken(accessToken));
 
   if (!accessToken || tokenCheck.error) {
@@ -102,9 +100,13 @@ const getToken = async (code) => {
   try {
     const encodeCode = encodeURIComponent(code);
 
-    const response = await fetch('https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/get-auth-url' + '/' + encodeCode);
+    const response = await fetch(
+      "https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/get-auth-url" +
+        "/" +
+        encodeCode
+    );
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     const { access_token } = await response.json();
     access_token && localStorage.setItem("access_token", access_token);
@@ -112,4 +114,4 @@ const getToken = async (code) => {
   } catch (error) {
     error.json();
   }
-}
+};
