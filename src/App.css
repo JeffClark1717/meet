@@ -61,3 +61,11 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
+
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
+}
