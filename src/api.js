@@ -27,7 +27,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = `YOUR_GET_EVENTS_API_ENDPOINT/${token}`;
+    const url = `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
@@ -101,7 +101,7 @@ const getToken = async (code) => {
     const encodeCode = encodeURIComponent(code);
 
     const response = await fetch(
-      "https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/get-auth-url" +
+      "https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/token" +
         "/" +
         encodeCode
     );
