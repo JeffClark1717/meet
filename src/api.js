@@ -1,4 +1,5 @@
 import mockData from "./mock-data";
+import NProgress from "nprogress";
 
 /**
  *
@@ -23,17 +24,24 @@ export const getEvents = async () => {
     return mockData;
   }
 
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events?JSON.parse(events):[];
+  }
+
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url = `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
+    const url = `"https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
+      NProgress.done();
+      localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
-    }
-    return null;
+    } else return null;
   }
 };
 
