@@ -1,23 +1,30 @@
-const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
+const NumberOfEvents = ({ setCurrentNOE, setErrorAlert }) => {
   const handleInputChanged = (event) => {
-    const value = event.target.value;
-    setCurrentNOE(value);
+      const value = event.target.value;
+
+      let infoText;
+      if (isNaN(value) || value > 50 || value <= 0) {
+          infoText = 'Please enter a number between 0 and 50';
+          setErrorAlert(infoText);
+      } else {
+          infoText = '';
+          setCurrentNOE(value);
+          setErrorAlert(infoText);
+      }
   };
 
   return (
-    <div id="number-of-events" data-testid="number-of-events">
-      <label htmlFor="number-of-events-input">Number of Events: </label>
-      <input
-        type="text"
-        data-testid="number-of-events-input"
-        id="number-of-events-input"
-        className="number-of-events-input"
-        value={currentNOE}
-        placeholder="Enter a number"
-        onChange={handleInputChanged}
-      />
-    </div>
+      <div id="events-count">
+          <p>Select Number of Events</p>
+          <input
+              type="text"
+              defaultValue="32"
+              onChange={handleInputChanged}
+              data-testid="events-count"
+          />
+      </div>
   );
-};
+  ;
+}
 
 export default NumberOfEvents;
