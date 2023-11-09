@@ -26,7 +26,7 @@ const App = () => {
       setWarningAlert("You are using this app offline. Event details may no longer be up to date.");
     }
     fetchData();
-  }, [currentCity, currentNOE]);
+  }, [currentNOE, currentCity]);
 
   const fetchData = async () => {
     const allEvents = await getEvents();
