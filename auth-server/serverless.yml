@@ -1,12 +1,12 @@
-
 service: auth-server
-frameworkVersion: "3"
 
+configValidationMode: off
 provider:
   name: aws
   runtime: nodejs18.x
+  lambdaHashingVersion: 20201221
   region: us-west-1
-  timeout: 30
+  timeout: 60 # optional, in seconds, default is 6
   environment:
     CLIENT_ID: ${file(config.json):CLIENT_ID}
     CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
@@ -23,10 +23,10 @@ functions:
     events:
       - http:
           path: api/token/{code}
-          method: get     
+          method: get
   getCalendarEvents:
     handler: handler.getCalendarEvents
     events:
       - http:
-          path: api/calendar-events/{accessToken}
+          path: api/get-events/{access_token}
           method: get

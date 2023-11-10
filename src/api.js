@@ -23,14 +23,14 @@ export const getEvents = async () => {
   if (!navigator.onLine) {
     const events = localStorage.getItem("lastEvents");
     NProgress.done();
-    return events?JSON.parse(events):[];
+    return events ? JSON.parse(events) : [];
   }
 
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url = `"https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
+    const url = `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
@@ -86,13 +86,10 @@ const removeQuery = () => {
 };
 
 const getToken = async (code) => {
-  try {
     const encodeCode = encodeURIComponent(code);
 
     const response = await fetch(
-      "https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/get-auth-url" +
-        "/" +
-        encodeCode
+      `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/token/${encodeCode}`
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -100,7 +97,4 @@ const getToken = async (code) => {
     const { access_token } = await response.json();
     access_token && localStorage.setItem("access_token", access_token);
     return access_token;
-  } catch (error) {
-    error.json();
-  }
 };
