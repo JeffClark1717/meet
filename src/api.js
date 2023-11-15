@@ -30,7 +30,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/calendar-events/${token}`;
+    const url = `https://fawad13177.execute-api.us-west-1.amazonaws.com/dev/api/get-events/${token}`;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
